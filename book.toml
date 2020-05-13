@@ -1,0 +1,10 @@
+[book]
+authors = ["Vivian Hellyer"]
+language = "en"
+multilingual = false
+src = "src"
+title = "HopDB"
+
+[output.html]
+default-theme = "rust"
+git-repository-url = "https://github.com/hopdb/book"
