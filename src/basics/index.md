@@ -1,1 +1,3 @@
 # Basics
+
+- [Projects](./projects.md)
