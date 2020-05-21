@@ -1,4 +1,4 @@
-# Delete
+# delete
 
 The `delete` command deletes a key by name. A key type can't be specified, and
 regardless of type the key will be deleted if it exists. The key's name is

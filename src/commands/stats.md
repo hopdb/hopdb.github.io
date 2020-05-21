@@ -1,4 +1,4 @@
-# Stats
+# stats
 
 The `stats` command returns a Map of statistics about the Hop instance. The Hop
 engine maintains metrics about operations and its current state.

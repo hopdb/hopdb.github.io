@@ -1,4 +1,4 @@
-# Increment By
+# increment:by
 
 The `increment:by` command is a sub-command of `increment`, and like `increment`
 it takes a key argument. An additional argument must be provided which specifies

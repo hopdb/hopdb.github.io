@@ -1,4 +1,4 @@
-# Decrement By
+# decrement:by
 
 The `decrement:by` command is a sub-command of `decrement`, and like `decrement`
 it takes a key argument. An additional argument must be provided which specifies

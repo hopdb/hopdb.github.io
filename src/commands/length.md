@@ -1,4 +1,4 @@
-# Length
+# length
 
 The `length` command returns the length of a Bytes, List, Map, Set, or String. A
 key type can be specified to limit the operation to only calculating the length
