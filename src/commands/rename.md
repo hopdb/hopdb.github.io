@@ -1,4 +1,4 @@
-# Rename
+# rename
 
 The `rename` command renames a key by moving the value from one key to another.
 The source key must have a value, and the destination key must not already be
