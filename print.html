@@ -83,7 +83,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="hop.html">Hop</a></li><li class="chapter-item expanded affix "><a href="installation.html">Installation</a></li><li class="chapter-item expanded affix "><a href="clients.html">Clients</a></li><li class="chapter-item expanded "><a href="basics/index.html"><strong aria-hidden="true">1.</strong> Basics</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="basics/projects.html"><strong aria-hidden="true">1.1.</strong> Projects</a></li></ol></li><li class="chapter-item expanded "><a href="commands/index.html"><strong aria-hidden="true">2.</strong> Commands</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="commands/decrement_by.html"><strong aria-hidden="true">2.1.</strong> Decrement By</a></li><li class="chapter-item expanded "><a href="commands/decrement.html"><strong aria-hidden="true">2.2.</strong> Decrement</a></li><li class="chapter-item expanded "><a href="commands/delete.html"><strong aria-hidden="true">2.3.</strong> Delete</a></li><li class="chapter-item expanded "><a href="commands/echo.html"><strong aria-hidden="true">2.4.</strong> Echo</a></li><li class="chapter-item expanded "><a href="commands/exists.html"><strong aria-hidden="true">2.5.</strong> Exists</a></li><li class="chapter-item expanded "><a href="commands/increment_by.html"><strong aria-hidden="true">2.6.</strong> Increment By</a></li><li class="chapter-item expanded "><a href="commands/increment.html"><strong aria-hidden="true">2.7.</strong> Increment</a></li><li class="chapter-item expanded "><a href="commands/length.html"><strong aria-hidden="true">2.8.</strong> Length</a></li><li class="chapter-item expanded "><a href="commands/rename.html"><strong aria-hidden="true">2.9.</strong> Rename</a></li><li class="chapter-item expanded "><a href="commands/stats.html"><strong aria-hidden="true">2.10.</strong> Stats</a></li></ol></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="hop.html">Hop</a></li><li class="chapter-item expanded affix "><a href="installation.html">Installation</a></li><li class="chapter-item expanded affix "><a href="clients.html">Clients</a></li><li class="chapter-item expanded "><a href="basics/index.html"><strong aria-hidden="true">1.</strong> Basics</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="basics/projects.html"><strong aria-hidden="true">1.1.</strong> Projects</a></li></ol></li><li class="chapter-item expanded "><a href="commands/index.html"><strong aria-hidden="true">2.</strong> Commands</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="commands/decrement.html"><strong aria-hidden="true">2.1.</strong> Decrement</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="commands/decrement_by.html"><strong aria-hidden="true">2.1.1.</strong> Decrement By</a></li></ol></li><li class="chapter-item expanded "><a href="commands/delete.html"><strong aria-hidden="true">2.2.</strong> Delete</a></li><li class="chapter-item expanded "><a href="commands/echo.html"><strong aria-hidden="true">2.3.</strong> Echo</a></li><li class="chapter-item expanded "><a href="commands/exists.html"><strong aria-hidden="true">2.4.</strong> Exists</a></li><li class="chapter-item expanded "><a href="commands/increment.html"><strong aria-hidden="true">2.5.</strong> Increment</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="commands/increment_by.html"><strong aria-hidden="true">2.5.1.</strong> Increment By</a></li></ol></li><li class="chapter-item expanded "><a href="commands/length.html"><strong aria-hidden="true">2.6.</strong> Length</a></li><li class="chapter-item expanded "><a href="commands/rename.html"><strong aria-hidden="true">2.7.</strong> Rename</a></li><li class="chapter-item expanded "><a href="commands/stats.html"><strong aria-hidden="true">2.8.</strong> Stats</a></li></ol></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -228,6 +228,28 @@ to it, or connect to a server and dispatch input requests to the server.</p>
 <h1><a class="header" href="#commands" id="commands">Commands</a></h1>
 <p>Hop includes a number of commands, some of which have subcommands and allow
 specifying the key type.</p>
+<h1><a class="header" href="#decrement" id="decrement">Decrement</a></h1>
+<p>The <code>decrement</code> command takes a key argument and decrements a float or integer
+by 1. If the key doesn't already exist, then a default value of 0 is set and
+then decremented.</p>
+<p>A key type of Float or Integer may be specified. If a different key type is
+specified then an error is returned.</p>
+<p>If a key exists of a different type than the specified key type, then an error
+is returned. For example, if a Float key type is specified but a key exists
+which is an Integer, then the command will error.</p>
+<p>Usage: <code>decrement[:key_type] &lt;key&gt;</code></p>
+<p>CLI example:</p>
+<pre><code>&gt; decrement foo # foo will be an integer since that is the default type
+-1
+&gt; decrement:float foo
+Dispatch error: key &quot;foo&quot; is not a float.
+&gt; decrement:float bar
+-1.0
+&gt; decrement bar
+-2.0
+&gt; decrement foo
+-2
+</code></pre>
 <h1><a class="header" href="#decrement-by" id="decrement-by">Decrement By</a></h1>
 <p>The <code>decrement:by</code> command is a sub-command of <code>decrement</code>, and like <code>decrement</code>
 it takes a key argument. An additional argument must be provided which specifies
@@ -250,28 +272,6 @@ Dispatch error: key &quot;foo&quot; is not a float.
 -5.0
 &gt; decrement:by foo -3
 -6
-</code></pre>
-<h1><a class="header" href="#decrement" id="decrement">Decrement</a></h1>
-<p>The <code>decrement</code> command takes a key argument and decrements a float or integer
-by 1. If the key doesn't already exist, then a default value of 0 is set and
-then decremented.</p>
-<p>A key type of Float or Integer may be specified. If a different key type is
-specified then an error is returned.</p>
-<p>If a key exists of a different type than the specified key type, then an error
-is returned. For example, if a Float key type is specified but a key exists
-which is an Integer, then the command will error.</p>
-<p>Usage: <code>decrement[:key_type] &lt;key&gt;</code></p>
-<p>CLI example:</p>
-<pre><code>&gt; decrement foo # foo will be an integer since that is the default type
--1
-&gt; decrement:float foo
-Dispatch error: key &quot;foo&quot; is not a float.
-&gt; decrement:float bar
--1.0
-&gt; decrement bar
--2.0
-&gt; decrement foo
--2
 </code></pre>
 <h1><a class="header" href="#delete" id="delete">Delete</a></h1>
 <p>The <code>delete</code> command deletes a key by name. A key type can't be specified, and
@@ -325,6 +325,28 @@ true
 &gt; exists foo bar baz
 false
 </code></pre>
+<h1><a class="header" href="#increment" id="increment">Increment</a></h1>
+<p>The <code>increment</code> command takes a key argument and increments a float or integer
+by 1. If the key doesn't already exist, then a default value of 0 is set and
+then incremented.</p>
+<p>A key type of Float or Integer may be specified. If a different key type is
+specified then an error is returned.</p>
+<p>If a key exists of a different type than the specified key type, then an error
+is returned. For example, if a Float key type is specified but a key exists
+which is an Integer, then the command will error.</p>
+<p>Usage: <code>increment[:key_type] &lt;key&gt;</code></p>
+<p>CLI example:</p>
+<pre><code>&gt; increment foo # foo will be an integer since that is the default type
+1
+&gt; increment:float foo
+Dispatch error: key &quot;foo&quot; is not a float.
+&gt; increment:float bar
+1.0
+&gt; increment bar
+2.0
+&gt; increment foo
+2
+</code></pre>
 <h1><a class="header" href="#increment-by" id="increment-by">Increment By</a></h1>
 <p>The <code>increment:by</code> command is a sub-command of <code>increment</code>, and like <code>increment</code>
 it takes a key argument. An additional argument must be provided which specifies
@@ -347,28 +369,6 @@ Dispatch error: key &quot;foo&quot; is not a float.
 5.0
 &gt; increment:by foo 3
 6
-</code></pre>
-<h1><a class="header" href="#increment" id="increment">Increment</a></h1>
-<p>The <code>increment</code> command takes a key argument and increments a float or integer
-by 1. If the key doesn't already exist, then a default value of 0 is set and
-then incremented.</p>
-<p>A key type of Float or Integer may be specified. If a different key type is
-specified then an error is returned.</p>
-<p>If a key exists of a different type than the specified key type, then an error
-is returned. For example, if a Float key type is specified but a key exists
-which is an Integer, then the command will error.</p>
-<p>Usage: <code>increment[:key_type] &lt;key&gt;</code></p>
-<p>CLI example:</p>
-<pre><code>&gt; increment foo # foo will be an integer since that is the default type
-1
-&gt; increment:float foo
-Dispatch error: key &quot;foo&quot; is not a float.
-&gt; increment:float bar
-1.0
-&gt; increment bar
-2.0
-&gt; increment foo
-2
 </code></pre>
 <h1><a class="header" href="#length" id="length">Length</a></h1>
 <p>The <code>length</code> command returns the length of a Bytes, List, Map, Set, or String. A
