@@ -1,4 +1,4 @@
-# Increment
+# increment
 
 The `increment` command takes a key argument and increments a float or integer
 by 1. If the key doesn't already exist, then a default value of 0 is set and

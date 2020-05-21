@@ -1,4 +1,4 @@
-# Exists
+# exists
 
 The `exists` command checks if all of the provided key names exist. If at least
 one key does not exist, then `false` is returned, otherwise `true` is returned.
