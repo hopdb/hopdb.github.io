@@ -4,7 +4,7 @@ The `length` command returns the length of a Bytes, List, Map, Set, or String. A
 key type can be specified to limit the operation to only calculating the length
 of the key if it matches the specified type.
 
-Usage: `length <key>`
+Usage: `length[:key_type] <key>`
 
 CLI example:
 
