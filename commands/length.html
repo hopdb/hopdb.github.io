@@ -157,15 +157,15 @@ key type can be specified to limit the operation to only calculating the length
 of the key if it matches the specified type.</p>
 <p>Usage: <code>length[:key_type] &lt;key&gt;</code></p>
 <p>CLI example:</p>
-<pre><code>&gt; set foo:map key1 value1 key2 value2
+<pre><code>&gt; set:map foo key1 value1 key2 value2
 key1=value1 key2=value2
 &gt; length foo
 2
-&gt; length foo:list
+&gt; length:list foo
 Dispatch error: the key &quot;foo&quot; isn't a List.
-&gt; set bar:set item1 item2 item1
+&gt; set:set bar item1 item2 item1
 item1 item2
-&gt; length foo:set
+&gt; length:set foo
 2
 </code></pre>
 

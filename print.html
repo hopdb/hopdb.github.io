@@ -279,7 +279,7 @@ regardless of type the key will be deleted if it exists. The key's name is
 returned on success as confirmation.</p>
 <p>Usage: <code>delete &lt;key&gt;</code></p>
 <p>CLI example:</p>
-<pre><code>&gt; set foo:list item1 item2 item1
+<pre><code>&gt; set:list foo item1 item2 item1
 item1
 item2
 item1
@@ -313,11 +313,11 @@ one key does not exist, then <code>false</code> is returned, otherwise <code>tru
 check that more exist, use multiple commands.</p>
 <p>Usage: <code>exists &lt;key&gt; [keys...]</code></p>
 <p>CLI example:</p>
-<pre><code>&gt; set foo:bool false
+<pre><code>&gt; set:bool foo false
 false
 &gt; exists foo
 true
-&gt; set bar:map a b c d
+&gt; set:map bar a b c d
 a=b
 c=d
 &gt; exists foo bar
@@ -376,15 +376,15 @@ key type can be specified to limit the operation to only calculating the length
 of the key if it matches the specified type.</p>
 <p>Usage: <code>length[:key_type] &lt;key&gt;</code></p>
 <p>CLI example:</p>
-<pre><code>&gt; set foo:map key1 value1 key2 value2
+<pre><code>&gt; set:map foo key1 value1 key2 value2
 key1=value1 key2=value2
 &gt; length foo
 2
-&gt; length foo:list
+&gt; length:list foo
 Dispatch error: the key &quot;foo&quot; isn't a List.
-&gt; set bar:set item1 item2 item1
+&gt; set:set bar item1 item2 item1
 item1 item2
-&gt; length foo:set
+&gt; length:set foo
 2
 </code></pre>
 <h1><a class="header" href="#rename" id="rename">rename</a></h1>
@@ -398,11 +398,11 @@ present.</p>
 The key to rename is required.
 &gt; rename foo bar
 Dispatch error: key &quot;foo&quot; doesn't exist.
-&gt; set foo:int 123
+&gt; set:int foo 123
 123
 &gt; rename foo bar
 bar
-&gt; set foo:int 456
+&gt; set:int foo 456
 456
 &gt; rename foo bar
 Dispatch error: the destination key, &quot;bar&quot;, already exists.

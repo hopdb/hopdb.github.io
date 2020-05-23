@@ -158,11 +158,11 @@ one key does not exist, then <code>false</code> is returned, otherwise <code>tru
 check that more exist, use multiple commands.</p>
 <p>Usage: <code>exists &lt;key&gt; [keys...]</code></p>
 <p>CLI example:</p>
-<pre><code>&gt; set foo:bool false
+<pre><code>&gt; set:bool foo false
 false
 &gt; exists foo
 true
-&gt; set bar:map a b c d
+&gt; set:map bar a b c d
 a=b
 c=d
 &gt; exists foo bar
