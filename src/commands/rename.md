@@ -15,11 +15,11 @@ CLI example:
 The key to rename is required.
 > rename foo bar
 Dispatch error: key "foo" doesn't exist.
-> set foo:int 123
+> set:int foo 123
 123
 > rename foo bar
 bar
-> set foo:int 456
+> set:int foo 456
 456
 > rename foo bar
 Dispatch error: the destination key, "bar", already exists.
