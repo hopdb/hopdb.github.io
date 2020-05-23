@@ -9,7 +9,7 @@ Usage: `delete <key>`
 CLI example:
 
 ```
-> set foo:list item1 item2 item1
+> set:list foo item1 item2 item1
 item1
 item2
 item1

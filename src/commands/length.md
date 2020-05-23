@@ -9,14 +9,14 @@ Usage: `length[:key_type] <key>`
 CLI example:
 
 ```
-> set foo:map key1 value1 key2 value2
+> set:map foo key1 value1 key2 value2
 key1=value1 key2=value2
 > length foo
 2
-> length foo:list
+> length:list foo
 Dispatch error: the key "foo" isn't a List.
-> set bar:set item1 item2 item1
+> set:set bar item1 item2 item1
 item1 item2
-> length foo:set
+> length:set foo
 2
 ```

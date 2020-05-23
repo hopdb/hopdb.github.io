@@ -11,11 +11,11 @@ Usage: `exists <key> [keys...]`
 CLI example:
 
 ```
-> set foo:bool false
+> set:bool foo false
 false
 > exists foo
 true
-> set bar:map a b c d
+> set:map bar a b c d
 a=b
 c=d
 > exists foo bar
