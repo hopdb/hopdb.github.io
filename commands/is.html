@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Projects - HopDB</title>
+        <title>is - HopDB</title>
         
 
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
@@ -81,7 +81,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../hop.html">Hop</a></li><li class="chapter-item expanded affix "><a href="../installation.html">Installation</a></li><li class="chapter-item expanded affix "><a href="../clients.html">Clients</a></li><li class="chapter-item expanded "><a href="../basics/index.html"><strong aria-hidden="true">1.</strong> Basics</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../basics/projects.html" class="active"><strong aria-hidden="true">1.1.</strong> Projects</a></li></ol></li><li class="chapter-item expanded "><a href="../commands/index.html"><strong aria-hidden="true">2.</strong> Commands</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../commands/decrement.html"><strong aria-hidden="true">2.1.</strong> decrement</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../commands/decrement_by.html"><strong aria-hidden="true">2.1.1.</strong> decrement:by</a></li></ol></li><li class="chapter-item expanded "><a href="../commands/delete.html"><strong aria-hidden="true">2.2.</strong> delete</a></li><li class="chapter-item expanded "><a href="../commands/echo.html"><strong aria-hidden="true">2.3.</strong> echo</a></li><li class="chapter-item expanded "><a href="../commands/exists.html"><strong aria-hidden="true">2.4.</strong> exists</a></li><li class="chapter-item expanded "><a href="../commands/increment.html"><strong aria-hidden="true">2.5.</strong> increment</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../commands/increment_by.html"><strong aria-hidden="true">2.5.1.</strong> increment:by</a></li></ol></li><li class="chapter-item expanded "><a href="../commands/is.html"><strong aria-hidden="true">2.6.</strong> is</a></li><li class="chapter-item expanded "><a href="../commands/length.html"><strong aria-hidden="true">2.7.</strong> length</a></li><li class="chapter-item expanded "><a href="../commands/rename.html"><strong aria-hidden="true">2.8.</strong> rename</a></li><li class="chapter-item expanded "><a href="../commands/stats.html"><strong aria-hidden="true">2.9.</strong> stats</a></li></ol></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../hop.html">Hop</a></li><li class="chapter-item expanded affix "><a href="../installation.html">Installation</a></li><li class="chapter-item expanded affix "><a href="../clients.html">Clients</a></li><li class="chapter-item expanded "><a href="../basics/index.html"><strong aria-hidden="true">1.</strong> Basics</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../basics/projects.html"><strong aria-hidden="true">1.1.</strong> Projects</a></li></ol></li><li class="chapter-item expanded "><a href="../commands/index.html"><strong aria-hidden="true">2.</strong> Commands</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../commands/decrement.html"><strong aria-hidden="true">2.1.</strong> decrement</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../commands/decrement_by.html"><strong aria-hidden="true">2.1.1.</strong> decrement:by</a></li></ol></li><li class="chapter-item expanded "><a href="../commands/delete.html"><strong aria-hidden="true">2.2.</strong> delete</a></li><li class="chapter-item expanded "><a href="../commands/echo.html"><strong aria-hidden="true">2.3.</strong> echo</a></li><li class="chapter-item expanded "><a href="../commands/exists.html"><strong aria-hidden="true">2.4.</strong> exists</a></li><li class="chapter-item expanded "><a href="../commands/increment.html"><strong aria-hidden="true">2.5.</strong> increment</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../commands/increment_by.html"><strong aria-hidden="true">2.5.1.</strong> increment:by</a></li></ol></li><li class="chapter-item expanded "><a href="../commands/is.html" class="active"><strong aria-hidden="true">2.6.</strong> is</a></li><li class="chapter-item expanded "><a href="../commands/length.html"><strong aria-hidden="true">2.7.</strong> length</a></li><li class="chapter-item expanded "><a href="../commands/rename.html"><strong aria-hidden="true">2.8.</strong> rename</a></li><li class="chapter-item expanded "><a href="../commands/stats.html"><strong aria-hidden="true">2.9.</strong> stats</a></li></ol></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -151,69 +151,72 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#projects" id="projects">Projects</a></h1>
-<p>Hop mainly consists of 4 individual projects, which in Rust terms are called
-crates. They have different use cases and require different levels of support.
-For example, the [engine] runs only on no-std and environments with an allocator,
-while the [server] requires the standard library and OS network primitives.</p>
-<h3><a class="header" href="#engine" id="engine">Engine</a></h3>
-<p>The engine is the heart of Hop. It can run on devices that have an allocator.
-It's responsible for maintaining the key state, parsing command requests,
-processing them, sending responses, pub/sub and client session management, and
-everything else except for networking and I/O like state persistence.</p>
-<p>The engine is a crate that can be used like any other Rust library.</p>
-<p>Source code: <a href="https://github.com/hopdb/hop/tree/master/engine">https://github.com/hopdb/hop/tree/master/engine</a></p>
-<p>Issue tracker: <a href="https://github.com/hopdb/hop/issues?q=is%3Aissue+is%3Aopen+label%3A%22crate%3A+engine%22">@hopdb/hop/issues/crate: engine</a></p>
-<h3><a class="header" href="#server" id="server">Server</a></h3>
-<p>The server is a light binary that concurrently manages connections and
-dispatches their requests to a managed instance of the engine. When the engine
-gives back a response, it is sent back to clients.</p>
-<p><strong>Source code</strong>: <a href="https://github.com/hopdb/hop/tree/master/server">https://github.com/hopdb/hop/tree/master/server</a></p>
-<p><strong>Issue tracker</strong>: <a href="https://github.com/hopdb/hop/issues?q=is%3Aissue+is%3Aopen+label%3A%22crate%3A+server%22">@hopdb/hop/issues/crate: server</a></p>
+                        <h1><a class="header" href="#is" id="is">is</a></h1>
+<p>Usage: <code>is&lt;:key_type&gt; &lt;key&gt; [keys...]</code></p>
+<p>The <code>is</code> command checks if all of the provided key names are of a certain key
+type. If at least one key does not exist or is not the specified key type,
+then <code>false</code> is returned, otherwise <code>true</code> is returned.</p>
+<p>At least one key must be provided. A key type must also be provided.</p>
+<h2><a class="header" href="#errors" id="errors">Errors</a></h2>
+<p>If a key type is not specified, then a <code>DispatchError::KeyTypeRequired</code> error is
+returned.</p>
+<p>If no arguments are provided, then a <code>DispatchError::ArgumentRetrieval</code> error is
+returned.</p>
+<h2><a class="header" href="#examples" id="examples">Examples</a></h2>
+<h3><a class="header" href="#cli" id="cli">CLI</a></h3>
+<pre><code>&gt; set:bool foo false
+false
+&gt; is:bool foo # foo is a bool
+true
+&gt; is:int foo # foo is not an int
+false
+&gt; set:int bar 123
+123
+&gt; is:bool foo bar # foo is a bool, but bar is not
+false
+&gt; is:bool foo baz # foo is a bool, but baz does not exist
+false
+</code></pre>
 <h3><a class="header" href="#client" id="client">Client</a></h3>
-<p>The client is the main utility of Hop. It is an asynchronous client that
-abstracts away the request and response parsing. It supports creating an
-&quot;in-memory&quot; client that runs an instance of the engine within it, and also
-supports connecting to a server instance and running requests through it.</p>
-<p>Here's a quick example of using a client to fire up a local Hop engine,
-increment a key, and then decrementing it again:</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
 </span><span class="boring">fn main() {
-</span>use hop::Client;
+</span>use hop::{Client, KeyType};
 
 let client = Client::memory();
-println!(&quot;New value: {}&quot;, client.increment(&quot;foo&quot;).await?); // value is 1
-println!(&quot;New value: {}&quot;, client.decrement(&quot;foo&quot;).await?); // value is 0
+
+// set a key named &quot;foo&quot; to a boolean with a value of false
+client.set(&quot;foo&quot;).bool(false).await?;
+
+// foo is a bool
+assert!(client.is(KeyType::Boolean).key(&quot;foo&quot;).await?);
+
+// foo is not an int
+assert!(!client.is(KeyType::Integer).key(&quot;foo&quot;).await?);
+
+// set a key named &quot;bar&quot; to an integer with a value of 123
+client.set(&quot;bar&quot;).int(123).await?;
+
+// foo is a bool, but bar is not
+assert!(!client.is(KeyType::Boolean).keys(&amp;[&quot;foo&quot;, &quot;bar&quot;]).await?);
+
+// foo is a bool, but baz does not exist
+assert!(!client.is(KeyType::Boolean).keys(&amp;[&quot;foo&quot;, &quot;baz&quot;]).await?);
 <span class="boring">}
 </span></code></pre></pre>
-<p><strong>Source code</strong>: <a href="https://github.com/hopdb/hop/tree/master/client">https://github.com/hopdb/hop/tree/master/client</a></p>
-<p><strong>Issue tracker</strong>: <a href="https://github.com/hopdb/hop/issues?q=is%3Aissue+is%3Aopen+label%3A%22crate%3A+client%22">@hopdb/hop/issues/crate: client</a></p>
-<h3><a class="header" href="#cli" id="cli">CLI</a></h3>
-<p>The CLI is used to test commands and perform debugging on a server. It can
-either create a local instance of the engine and dispatch user-provided input
-to it, or connect to a server and dispatch input requests to the server.</p>
-<p>Here's a quick example of using the CLI to test the above commands:</p>
-<pre><code>&gt; increment foo
-1
-&gt; decrement foo
-0
-</code></pre>
-<p><strong>Source code</strong>: <a href="https://github.com/hopdb/hop/tree/master/cli">https://github.com/hopdb/hop/tree/master/cli</a></p>
-<p><strong>Issue tracker</strong>: <a href="https://github.com/hopdb/hop/issues?q=is%3Aissue+is%3Aopen+label%3A%22crate%3A+cli%22">@hopdb/hop/issues/crate: cli</a></p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
                         
-                            <a rel="prev" href="../basics/index.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../commands/increment_by.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
                         
 
                         
-                            <a rel="next" href="../commands/index.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next" href="../commands/length.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
                         
@@ -225,13 +228,13 @@ to it, or connect to a server and dispatch input requests to the server.</p>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
                 
-                    <a rel="prev" href="../basics/index.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../commands/increment_by.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
                 
 
                 
-                    <a rel="next" href="../commands/index.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next" href="../commands/length.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
                 
