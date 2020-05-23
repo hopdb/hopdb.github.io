@@ -16,4 +16,5 @@
   - [is](./commands/is.md)
   - [length](./commands/length.md)
   - [rename](./commands/rename.md)
+  - [set](./commands/set.md)
   - [stats](./commands/stats.md)
