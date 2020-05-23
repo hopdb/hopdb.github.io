@@ -6,6 +6,7 @@
 - [Basics](./basics/index.md)
   - [Projects](./basics/projects.md)
 - [Commands](./commands/index.md)
+  - [append](./commands/append.md)
   - [decrement](./commands/decrement.md)
     - [decrement:by](./commands/decrement_by.md)
   - [delete](./commands/delete.md)
