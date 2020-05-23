@@ -13,6 +13,7 @@
   - [exists](./commands/exists.md)
   - [increment](./commands/increment.md)
     - [increment:by](./commands/increment_by.md)
+  - [is](./commands/is.md)
   - [length](./commands/length.md)
   - [rename](./commands/rename.md)
   - [stats](./commands/stats.md)
