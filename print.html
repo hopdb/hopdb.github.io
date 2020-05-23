@@ -83,7 +83,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="hop.html">Hop</a></li><li class="chapter-item expanded affix "><a href="installation.html">Installation</a></li><li class="chapter-item expanded affix "><a href="clients.html">Clients</a></li><li class="chapter-item expanded "><a href="basics/index.html"><strong aria-hidden="true">1.</strong> Basics</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="basics/projects.html"><strong aria-hidden="true">1.1.</strong> Projects</a></li></ol></li><li class="chapter-item expanded "><a href="commands/index.html"><strong aria-hidden="true">2.</strong> Commands</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="commands/decrement.html"><strong aria-hidden="true">2.1.</strong> decrement</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="commands/decrement_by.html"><strong aria-hidden="true">2.1.1.</strong> decrement:by</a></li></ol></li><li class="chapter-item expanded "><a href="commands/delete.html"><strong aria-hidden="true">2.2.</strong> delete</a></li><li class="chapter-item expanded "><a href="commands/echo.html"><strong aria-hidden="true">2.3.</strong> echo</a></li><li class="chapter-item expanded "><a href="commands/exists.html"><strong aria-hidden="true">2.4.</strong> exists</a></li><li class="chapter-item expanded "><a href="commands/increment.html"><strong aria-hidden="true">2.5.</strong> increment</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="commands/increment_by.html"><strong aria-hidden="true">2.5.1.</strong> increment:by</a></li></ol></li><li class="chapter-item expanded "><a href="commands/is.html"><strong aria-hidden="true">2.6.</strong> is</a></li><li class="chapter-item expanded "><a href="commands/length.html"><strong aria-hidden="true">2.7.</strong> length</a></li><li class="chapter-item expanded "><a href="commands/rename.html"><strong aria-hidden="true">2.8.</strong> rename</a></li><li class="chapter-item expanded "><a href="commands/stats.html"><strong aria-hidden="true">2.9.</strong> stats</a></li></ol></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="hop.html">Hop</a></li><li class="chapter-item expanded affix "><a href="installation.html">Installation</a></li><li class="chapter-item expanded affix "><a href="clients.html">Clients</a></li><li class="chapter-item expanded "><a href="basics/index.html"><strong aria-hidden="true">1.</strong> Basics</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="basics/projects.html"><strong aria-hidden="true">1.1.</strong> Projects</a></li></ol></li><li class="chapter-item expanded "><a href="commands/index.html"><strong aria-hidden="true">2.</strong> Commands</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="commands/decrement.html"><strong aria-hidden="true">2.1.</strong> decrement</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="commands/decrement_by.html"><strong aria-hidden="true">2.1.1.</strong> decrement:by</a></li></ol></li><li class="chapter-item expanded "><a href="commands/delete.html"><strong aria-hidden="true">2.2.</strong> delete</a></li><li class="chapter-item expanded "><a href="commands/echo.html"><strong aria-hidden="true">2.3.</strong> echo</a></li><li class="chapter-item expanded "><a href="commands/exists.html"><strong aria-hidden="true">2.4.</strong> exists</a></li><li class="chapter-item expanded "><a href="commands/increment.html"><strong aria-hidden="true">2.5.</strong> increment</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="commands/increment_by.html"><strong aria-hidden="true">2.5.1.</strong> increment:by</a></li></ol></li><li class="chapter-item expanded "><a href="commands/is.html"><strong aria-hidden="true">2.6.</strong> is</a></li><li class="chapter-item expanded "><a href="commands/length.html"><strong aria-hidden="true">2.7.</strong> length</a></li><li class="chapter-item expanded "><a href="commands/rename.html"><strong aria-hidden="true">2.8.</strong> rename</a></li><li class="chapter-item expanded "><a href="commands/set.html"><strong aria-hidden="true">2.9.</strong> set</a></li><li class="chapter-item expanded "><a href="commands/stats.html"><strong aria-hidden="true">2.10.</strong> stats</a></li></ol></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -460,6 +460,57 @@ bar
 &gt; rename foo bar
 Dispatch error: the destination key, &quot;bar&quot;, already exists.
 </code></pre>
+<h1><a class="header" href="#set" id="set">set</a></h1>
+<p>Usage: <code>set[:key_type] &lt;key&gt; &lt;value...&gt;</code></p>
+<p>The <code>set</code> command sets a value to a key, overriding the existing key's value if
+one exists. The <code>set</code> command supports setting values of all types.</p>
+<p>A key and value must both be provided. A key type is optional, and the default
+type is raw bytes.</p>
+<h2><a class="header" href="#errors-1" id="errors-1">Errors</a></h2>
+<p>If a key type set not specified, then a <code>DispatchError::KeyUnspecified</code> error is
+returned.</p>
+<p>If no value is provided, then a <code>DispatchError::ArgumentRetrieval</code> error is
+returned.</p>
+<p>If a provided value is of the wrong type, then a <code>DispatchError::WrongType</code>
+error is returned.</p>
+<h2><a class="header" href="#examples-1" id="examples-1">Examples</a></h2>
+<h3><a class="header" href="#cli-2" id="cli-2">CLI</a></h3>
+<pre><code>&gt; set:bool foo true
+true
+&gt; is:bool foo # &quot;foo&quot; is a bool
+true
+&gt; set:int foo 123 # now set &quot;foo&quot; to an integer value of 123
+123
+&gt; is:int foo # &quot;foo&quot; is now an integer
+true
+&gt; set:list foo bar baz # now set &quot;foo&quot; to a list with items &quot;bar&quot; and &quot;baz&quot;
+a=b
+c=d
+</code></pre>
+<h3><a class="header" href="#client-2" id="client-2">Client</a></h3>
+<pre><pre class="playpen"><code class="language-rust">
+<span class="boring">#![allow(unused_variables)]
+</span><span class="boring">fn main() {
+</span>use hop::{Client, KeyType};
+
+let client = Client::memory();
+
+// set a key named &quot;foo&quot; to a boolean with a value of true
+client.set(&quot;foo&quot;).bool(true).await?;
+
+// &quot;foo&quot; is a bool
+assert!(client.is(KeyType::Boolean).key(&quot;foo&quot;).await?);
+
+// now set &quot;foo&quot; to an integer value of 123
+client.set(&quot;foo&quot;).int(123).await?;
+
+// &quot;foo&quot; is now an integer
+assert!(client.is(KeyType::Integer).key(&quot;foo&quot;).await?);
+
+// now set &quot;foo&quot; to a list with items &quot;bar&quot; and &quot;baz&quot;
+client.set(&quot;foo&quot;).list([b&quot;bar&quot;.to_vec(), b&quot;baz&quot;.to_vec()]).await?;
+<span class="boring">}
+</span></code></pre></pre>
 <h1><a class="header" href="#stats" id="stats">stats</a></h1>
 <p>The <code>stats</code> command returns a Map of statistics about the Hop instance. The Hop
 engine maintains metrics about operations and its current state.</p>
