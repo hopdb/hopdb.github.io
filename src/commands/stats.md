@@ -19,7 +19,7 @@ Usage: `stats`
 CLI example:
 
 ```python
-> set foo:int 1234
+> set:int foo 1234
 1234
 > stats
 Commands successful: 1
