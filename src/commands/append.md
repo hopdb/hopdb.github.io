@@ -1,8 +1,8 @@
 # append
 
-Usage: `append[:key_type] <key> [value...]`
+**Usage**: `append[:key_type] <key> [value...]`
 
-Supported key types: `bytes`, `list`, `string`
+**Supported key types**: `bytes`, `list`, `string`
 
 The `append` command appends a value to a key depending on the key's type. If
 the key type is a `bytes`, then the given argument will be appended to the
@@ -15,15 +15,14 @@ one will restrict the operation to the key type and error if it is different.
 
 ## Errors
 
-If a key type is not specified, then a `DispatchError::KeyUnspecified` is
-returned.
+If a key is not specified then a `DispatchError::KeyUnspecified` is returned.
 
-If no value is provided, then a `DispatchError::ArgumentRetrieval` is returned.
+If no value is provided then a `DispatchError::ArgumentRetrieval` is returned.
 
-If the command does not support the specified key type, than a
-DispatchError::KeyTypeInvalid` is returned.
+If the command does not support the specified key type then a
+`DispatchError::KeyTypeInvalid` is returned.
 
-If a provided value is of the wrong type, then a
+If a provided value is of the wrong type then a
 `DispatchError::KeyTypeDifferent` is returned.
 
 ## Examples

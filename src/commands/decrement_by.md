@@ -1,23 +1,30 @@
 # decrement:by
 
+**Usage**: `decrement:by[:key_type] <key> <amount>`
+
+**Supported key types**: `float`, `integer`
+
 The `decrement:by` command is a sub-command of `decrement`, and like `decrement`
 it takes a key argument. An additional argument must be provided which specifies
 the amount to decrement the value by. If the key doesn't already exist, then a
 default value of 0 is set and then decremented by the specified amount.
 
-A key type of Float or Integer may be specified. If a different key type is
-specified then an error is returned.
+## Errors
 
-If a key exists of a different type than the specified key type, then an error
-is returned. For example, if a Float key type is specified but a key exists
-which is an Integer, then the command will error.
+If a key is not specified then a `DispatchError::KeyUnspecified` is returned.
 
-Usage: `decrement:by[:key_type] <key> <amount>`
+If an argument is not provided, then a `DispatchError::ArgumentRetrieval` is
+returned.
 
-CLI example:
+If a key type is specified but the value of the key is of a different type, then
+a `DispatchError::KeyTypeDifferent` is returned.
+
+## Examples
+
+### CLI
 
 ```
-> decrement:by foo 3 # foo will be an integer since that is the default type
+> decrement:by:int foo 3
 -3
 > decrement:by:float foo -2.0
 Dispatch error: key "foo" is not a float.
@@ -27,4 +34,23 @@ Dispatch error: key "foo" is not a float.
 -5.0
 > decrement:by foo -3
 -6
+```
+
+### Client
+
+```rust
+use hop::{Client, KeyType};
+
+let client = Client::memory();
+
+assert_eq!(-3, client.decrement("foo").int().by(3).await?);
+
+// Dispatch error: key "foo" is not a float.
+assert!(client.decrement("foo").float().by(2.0).await.is_err());
+
+assert!(client.decrement("bar").float().by(2.0).await.is_ok());
+
+assert!(client.decrement("bar").float().by(3.0).await.is_ok());
+
+assert_eq!(-6, client.decrement("foo").int().by(3).await?);
 ```

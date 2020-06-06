@@ -1,6 +1,9 @@
 # set
 
-Usage: `set[:key_type] <key> <value...>`
+**Usage**: `set[:key_type] <key> <value...>`
+
+**Supported key types**: `boolean`, `bytes`, `float`, `integer`, `list`, `map`,
+`set`, `string`
 
 The `set` command sets a value to a key, overriding the existing key's value if
 one exists. The `set` command supports setting values of all types.
@@ -10,14 +13,14 @@ type is raw bytes.
 
 ## Errors
 
-If a key type set not specified, then a `DispatchError::KeyUnspecified` error is
+If a key type is not specified then a `DispatchError::KeyUnspecified` error is
 returned.
 
-If no value is provided, then a `DispatchError::ArgumentRetrieval` error is
+If no value is provided then a `DispatchError::ArgumentRetrieval` error is
 returned.
 
-If a provided value is of the wrong type, then a `DispatchError::WrongType`
-error is returned.
+If a provided value is of the wrong type then a
+`DispatchError::KeyTypeDifferent` error is returned.
 
 ## Examples
 
