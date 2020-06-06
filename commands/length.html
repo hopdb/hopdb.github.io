@@ -152,11 +152,21 @@
                 <div id="content" class="content">
                     <main>
                         <h1><a class="header" href="#length" id="length">length</a></h1>
-<p>The <code>length</code> command returns the length of a Bytes, List, Map, Set, or String. A
-key type can be specified to limit the operation to only calculating the length
-of the key if it matches the specified type.</p>
-<p>Usage: <code>length[:key_type] &lt;key&gt;</code></p>
-<p>CLI example:</p>
+<p><strong>Usage</strong>: <code>length[:key_type] &lt;key&gt;</code></p>
+<p><strong>Supported key types</strong>: <code>bytes</code>, <code>list</code>, <code>map</code>, <code>set</code>, <code>string</code></p>
+<p>The <code>length</code> command returns the length of some bytes, a list, map, set, or
+string. A key type can be specified to limit the operation to only calculating
+the length of the key if it matches the specified type.</p>
+<h2><a class="header" href="#errors" id="errors">Errors</a></h2>
+<p>If a key is not specified then a <code>DispatchError::KeyUnspecified</code> is returned.</p>
+<p>If a specified key type is not supported than a <code>DispatchError::KeyTypeInvalid</code>
+is returned.</p>
+<p>If the specified key does not exist thyen a <code>DispatchError::KeyNonexistent</code>
+is returned.</p>
+<p>If the key type of the key is different than the specified key type then a
+<code>DispatchError::KeyTypeDifferent</code> is returned.</p>
+<h2><a class="header" href="#examples" id="examples">Examples</a></h2>
+<h3><a class="header" href="#cli" id="cli">CLI</a></h3>
 <pre><code>&gt; set:map foo key1 value1 key2 value2
 key1=value1 key2=value2
 &gt; length foo

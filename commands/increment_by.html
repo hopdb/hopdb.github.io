@@ -152,17 +152,20 @@
                 <div id="content" class="content">
                     <main>
                         <h1><a class="header" href="#incrementby" id="incrementby">increment:by</a></h1>
+<p><strong>Usage</strong>: <code>increment:by[:key_type] &lt;key&gt; &lt;amount&gt;</code></p>
+<p><strong>Supported key types</strong>: <code>float</code>, <code>integer</code></p>
 <p>The <code>increment:by</code> command is a sub-command of <code>increment</code>, and like <code>increment</code>
 it takes a key argument. An additional argument must be provided which specifies
 the amount to increment the value by. If the key doesn't already exist, then a
 default value of 0 is set and then incremented by the specified amount.</p>
-<p>A key type of Float or Integer may be specified. If a different key type is
-specified then an error is returned.</p>
-<p>If a key exists of a different type than the specified key type, then an error
-is returned. For example, if a Float key type is specified but a key exists
-which is an Integer, then the command will error.</p>
-<p>Usage: <code>increment:by[:key_type] &lt;key&gt; &lt;amount&gt;</code></p>
-<p>CLI example:</p>
+<h2><a class="header" href="#errors" id="errors">Errors</a></h2>
+<p>If a key is not specified then a <code>DispatchError::KeyUnspecified</code> is returned.</p>
+<p>If a value is not specified then a <code>DispatchError::ArgumentRetrieval</code> is
+returned.</p>
+<p>If the key type was specified and it is different than the key's type a
+<code>DispatchError::KeyTypeDifferent</code> is returned.</p>
+<h2><a class="header" href="#examples" id="examples">Examples</a></h2>
+<h3><a class="header" href="#cli" id="cli">CLI</a></h3>
 <pre><code>&gt; increment:by foo 3 # foo will be an integer since that is the default type
 3
 &gt; increment:by:float foo 2.0
@@ -174,6 +177,26 @@ Dispatch error: key &quot;foo&quot; is not a float.
 &gt; increment:by foo 3
 6
 </code></pre>
+<h3><a class="header" href="#client" id="client">Client</a></h3>
+<pre><pre class="playpen"><code class="language-rust">
+<span class="boring">#![allow(unused_variables)]
+</span><span class="boring">fn main() {
+</span>use hop::{Client, KeyType};
+
+let client = Client::memory();
+
+assert_eq!(3, client.increment(&quot;foo&quot;).int().by(3).await?);
+
+// Dispatch error: key &quot;foo&quot; is not a float.
+assert!(client.increment(&quot;foo&quot;).float().by(2.0).await.is_err());
+
+assert!(client.increment(&quot;bar&quot;).float().by(2.0).await.is_ok());
+
+assert!(client.increment(&quot;bar&quot;).float().by(3.0).await.is_ok());
+
+assert_eq!(6, client.increment(&quot;foo&quot;).int().by(3).await?);
+<span class="boring">}
+</span></code></pre></pre>
 
                     </main>
 

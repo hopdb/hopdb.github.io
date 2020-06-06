@@ -152,6 +152,8 @@
                 <div id="content" class="content">
                     <main>
                         <h1><a class="header" href="#stats" id="stats">stats</a></h1>
+<p><strong>Usage</strong>: <code>stats</code></p>
+<p><strong>Supported key types</strong>: none</p>
 <p>The <code>stats</code> command returns a Map of statistics about the Hop instance. The Hop
 engine maintains metrics about operations and its current state.</p>
 <p>The following statistics are returned:</p>
@@ -165,8 +167,11 @@ initiated.</li>
 <li><strong>sessions_ended</strong>: the number of client sessions that have finished for one
 reason or another.</li>
 </ul>
-<p>Usage: <code>stats</code></p>
-<p>CLI example:</p>
+<h2><a class="header" href="#errors" id="errors">Errors</a></h2>
+<p>If a key type is specified then a <code>DispatchError::KeyTypeUnexpected</code> is
+returned.</p>
+<h2><a class="header" href="#examples" id="examples">Examples</a></h2>
+<h3><a class="header" href="#cli" id="cli">CLI</a></h3>
 <pre><code class="language-python">&gt; set:int foo 1234
 1234
 &gt; stats

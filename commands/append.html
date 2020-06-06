@@ -152,8 +152,8 @@
                 <div id="content" class="content">
                     <main>
                         <h1><a class="header" href="#append" id="append">append</a></h1>
-<p>Usage: <code>append[:key_type] &lt;key&gt; [value...]</code></p>
-<p>Supported key types: <code>bytes</code>, <code>list</code>, <code>string</code></p>
+<p><strong>Usage</strong>: <code>append[:key_type] &lt;key&gt; [value...]</code></p>
+<p><strong>Supported key types</strong>: <code>bytes</code>, <code>list</code>, <code>string</code></p>
 <p>The <code>append</code> command appends a value to a key depending on the key's type. If
 the key type is a <code>bytes</code>, then the given argument will be appended to the
 bytes. If the key type is a <code>list</code>, then the given argument will be appended as
@@ -162,12 +162,11 @@ will be appended to the string, but <em>only</em> if the argument is valid UTF-8
 <p>A key and value must both be provided. A key type is optional, but specifying
 one will restrict the operation to the key type and error if it is different.</p>
 <h2><a class="header" href="#errors" id="errors">Errors</a></h2>
-<p>If a key type is not specified, then a <code>DispatchError::KeyUnspecified</code> is
-returned.</p>
-<p>If no value is provided, then a <code>DispatchError::ArgumentRetrieval</code> is returned.</p>
-<p>If the command does not support the specified key type, than a
-DispatchError::KeyTypeInvalid` is returned.</p>
-<p>If a provided value is of the wrong type, then a
+<p>If a key is not specified then a <code>DispatchError::KeyUnspecified</code> is returned.</p>
+<p>If no value is provided then a <code>DispatchError::ArgumentRetrieval</code> is returned.</p>
+<p>If the command does not support the specified key type then a
+<code>DispatchError::KeyTypeInvalid</code> is returned.</p>
+<p>If a provided value is of the wrong type then a
 <code>DispatchError::KeyTypeDifferent</code> is returned.</p>
 <h2><a class="header" href="#examples" id="examples">Examples</a></h2>
 <h3><a class="header" href="#cli" id="cli">CLI</a></h3>

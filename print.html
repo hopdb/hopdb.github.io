@@ -229,8 +229,8 @@ to it, or connect to a server and dispatch input requests to the server.</p>
 <p>Hop includes a number of commands, some of which have subcommands and allow
 specifying the key type.</p>
 <h1><a class="header" href="#append" id="append">append</a></h1>
-<p>Usage: <code>append[:key_type] &lt;key&gt; [value...]</code></p>
-<p>Supported key types: <code>bytes</code>, <code>list</code>, <code>string</code></p>
+<p><strong>Usage</strong>: <code>append[:key_type] &lt;key&gt; [value...]</code></p>
+<p><strong>Supported key types</strong>: <code>bytes</code>, <code>list</code>, <code>string</code></p>
 <p>The <code>append</code> command appends a value to a key depending on the key's type. If
 the key type is a <code>bytes</code>, then the given argument will be appended to the
 bytes. If the key type is a <code>list</code>, then the given argument will be appended as
@@ -239,12 +239,11 @@ will be appended to the string, but <em>only</em> if the argument is valid UTF-8
 <p>A key and value must both be provided. A key type is optional, but specifying
 one will restrict the operation to the key type and error if it is different.</p>
 <h2><a class="header" href="#errors" id="errors">Errors</a></h2>
-<p>If a key type is not specified, then a <code>DispatchError::KeyUnspecified</code> is
-returned.</p>
-<p>If no value is provided, then a <code>DispatchError::ArgumentRetrieval</code> is returned.</p>
-<p>If the command does not support the specified key type, than a
-DispatchError::KeyTypeInvalid` is returned.</p>
-<p>If a provided value is of the wrong type, then a
+<p>If a key is not specified then a <code>DispatchError::KeyUnspecified</code> is returned.</p>
+<p>If no value is provided then a <code>DispatchError::ArgumentRetrieval</code> is returned.</p>
+<p>If the command does not support the specified key type then a
+<code>DispatchError::KeyTypeInvalid</code> is returned.</p>
+<p>If a provided value is of the wrong type then a
 <code>DispatchError::KeyTypeDifferent</code> is returned.</p>
 <h2><a class="header" href="#examples" id="examples">Examples</a></h2>
 <h3><a class="header" href="#cli-1" id="cli-1">CLI</a></h3>
@@ -285,16 +284,19 @@ client.append(&quot;foo&quot;).value(&quot;item3&quot;).await?;
 <span class="boring">}
 </span></code></pre></pre>
 <h1><a class="header" href="#decrement" id="decrement">decrement</a></h1>
+<p><strong>Usage</strong>: <code>decrement[:key_type] &lt;key&gt;</code></p>
+<p><strong>Supported key types</strong>: <code>float</code>, <code>integer</code></p>
 <p>The <code>decrement</code> command takes a key argument and decrements a float or integer
 by 1. If the key doesn't already exist, then a default value of 0 is set and
 then decremented.</p>
-<p>A key type of Float or Integer may be specified. If a different key type is
-specified then an error is returned.</p>
-<p>If a key exists of a different type than the specified key type, then an error
-is returned. For example, if a Float key type is specified but a key exists
-which is an Integer, then the command will error.</p>
-<p>Usage: <code>decrement[:key_type] &lt;key&gt;</code></p>
-<p>CLI example:</p>
+<h2><a class="header" href="#errors-1" id="errors-1">Errors</a></h2>
+<p>If a key is not specified, then a <code>DispatchError::KeyUnspecified</code> is returned.</p>
+<p>If the command does not support the specified key type, then a
+<code>DispatchError::KeyTypeInvalid</code> is returned.</p>
+<p>If the type of the key is different than the specified key type, then a
+<code>DispatchError::KeyTypeDifferent</code> is returned.</p>
+<h2><a class="header" href="#examples-1" id="examples-1">Examples</a></h2>
+<h3><a class="header" href="#cli-2" id="cli-2">CLI</a></h3>
 <pre><code>&gt; decrement foo # foo will be an integer since that is the default type
 -1
 &gt; decrement:float foo
@@ -306,19 +308,42 @@ Dispatch error: key &quot;foo&quot; is not a float.
 &gt; decrement foo
 -2
 </code></pre>
+<h3><a class="header" href="#client-2" id="client-2">Client</a></h3>
+<pre><pre class="playpen"><code class="language-rust">
+<span class="boring">#![allow(unused_variables)]
+</span><span class="boring">fn main() {
+</span>use hop::{Client, KeyType};
+
+let client = Client::memory();
+
+assert_eq!(-1, client.decrement(&quot;foo&quot;).await?);
+
+// Dispatch error: key &quot;foo&quot; is not a float.
+assert!(client.decrement(&quot;foo&quot;).float().await.is_err());
+
+assert!(client.decrement(&quot;bar&quot;).float().await.is_ok());
+
+assert!(client.decrement(&quot;bar&quot;).float().await.is_ok());
+
+assert_eq!(-2, client.decrement(&quot;foo&quot;).int().await?);
+<span class="boring">}
+</span></code></pre></pre>
 <h1><a class="header" href="#decrementby" id="decrementby">decrement:by</a></h1>
+<p><strong>Usage</strong>: <code>decrement:by[:key_type] &lt;key&gt; &lt;amount&gt;</code></p>
+<p><strong>Supported key types</strong>: <code>float</code>, <code>integer</code></p>
 <p>The <code>decrement:by</code> command is a sub-command of <code>decrement</code>, and like <code>decrement</code>
 it takes a key argument. An additional argument must be provided which specifies
 the amount to decrement the value by. If the key doesn't already exist, then a
 default value of 0 is set and then decremented by the specified amount.</p>
-<p>A key type of Float or Integer may be specified. If a different key type is
-specified then an error is returned.</p>
-<p>If a key exists of a different type than the specified key type, then an error
-is returned. For example, if a Float key type is specified but a key exists
-which is an Integer, then the command will error.</p>
-<p>Usage: <code>decrement:by[:key_type] &lt;key&gt; &lt;amount&gt;</code></p>
-<p>CLI example:</p>
-<pre><code>&gt; decrement:by foo 3 # foo will be an integer since that is the default type
+<h2><a class="header" href="#errors-2" id="errors-2">Errors</a></h2>
+<p>If a key is not specified then a <code>DispatchError::KeyUnspecified</code> is returned.</p>
+<p>If an argument is not provided, then a <code>DispatchError::ArgumentRetrieval</code> is
+returned.</p>
+<p>If a key type is specified but the value of the key is of a different type, then
+a <code>DispatchError::KeyTypeDifferent</code> is returned.</p>
+<h2><a class="header" href="#examples-2" id="examples-2">Examples</a></h2>
+<h3><a class="header" href="#cli-3" id="cli-3">CLI</a></h3>
+<pre><code>&gt; decrement:by:int foo 3
 -3
 &gt; decrement:by:float foo -2.0
 Dispatch error: key &quot;foo&quot; is not a float.
@@ -329,12 +354,40 @@ Dispatch error: key &quot;foo&quot; is not a float.
 &gt; decrement:by foo -3
 -6
 </code></pre>
+<h3><a class="header" href="#client-3" id="client-3">Client</a></h3>
+<pre><pre class="playpen"><code class="language-rust">
+<span class="boring">#![allow(unused_variables)]
+</span><span class="boring">fn main() {
+</span>use hop::{Client, KeyType};
+
+let client = Client::memory();
+
+assert_eq!(-3, client.decrement(&quot;foo&quot;).int().by(3).await?);
+
+// Dispatch error: key &quot;foo&quot; is not a float.
+assert!(client.decrement(&quot;foo&quot;).float().by(2.0).await.is_err());
+
+assert!(client.decrement(&quot;bar&quot;).float().by(2.0).await.is_ok());
+
+assert!(client.decrement(&quot;bar&quot;).float().by(3.0).await.is_ok());
+
+assert_eq!(-6, client.decrement(&quot;foo&quot;).int().by(3).await?);
+<span class="boring">}
+</span></code></pre></pre>
 <h1><a class="header" href="#delete" id="delete">delete</a></h1>
+<p><strong>Usage</strong>: <code>delete &lt;key&gt;</code></p>
+<p><strong>Supported key types</strong>: none</p>
 <p>The <code>delete</code> command deletes a key by name. A key type can't be specified, and
 regardless of type the key will be deleted if it exists. The key's name is
 returned on success as confirmation.</p>
-<p>Usage: <code>delete &lt;key&gt;</code></p>
-<p>CLI example:</p>
+<h2><a class="header" href="#errors-3" id="errors-3">Errors</a></h2>
+<p>If a key type is specified then a <code>DispatchError::KeyTypeUnexpected</code> is
+returned.</p>
+<p>If a key is not specified then a <code>DispatchError::KeyUnspecified</code> is returned.</p>
+<p>If the key does not exist then a <code>DispatchError::PreconditionFailed</code> is
+returned.</p>
+<h2><a class="header" href="#examples-3" id="examples-3">Examples</a></h2>
+<h3><a class="header" href="#cli-4" id="cli-4">CLI</a></h3>
 <pre><code>&gt; set:list foo item1 item2 item1
 item1
 item2
@@ -347,11 +400,15 @@ foo
 false
 </code></pre>
 <h1><a class="header" href="#echo" id="echo">echo</a></h1>
+<p><strong>Usage</strong>: <code>echo [argument...]</code></p>
+<p><strong>Supported key types</strong>: none</p>
 <p>The <code>echo</code> command echoes back the provided arguments as a list of the same
 arguments. If no arguments are echoed, then an empty list is returned. A key
 type can't be specified.</p>
-<p>Usage: <code>echo [argument...]</code></p>
-<p>CLI example:</p>
+<h2><a class="header" href="#errors-4" id="errors-4">Errors</a></h2>
+<p>This command doesn't error.</p>
+<h2><a class="header" href="#examples-4" id="examples-4">Examples</a></h2>
+<h3><a class="header" href="#cli-5" id="cli-5">CLI</a></h3>
 <pre><code>&gt; echo foo bar baz
 foo
 bar
@@ -360,15 +417,20 @@ baz
 echo
 &gt; echo
 
-
 </code></pre>
 <h1><a class="header" href="#exists" id="exists">exists</a></h1>
+<p><strong>Usage</strong>: <code>exists &lt;key&gt; [keys...]</code></p>
+<p><strong>Supported key types</strong>: none</p>
 <p>The <code>exists</code> command checks if all of the provided key names exist. If at least
 one key does not exist, then <code>false</code> is returned, otherwise <code>true</code> is returned.</p>
 <p>At least one key must be provided, up to the global limit of 255. If you need to
 check that more exist, use multiple commands.</p>
-<p>Usage: <code>exists &lt;key&gt; [keys...]</code></p>
-<p>CLI example:</p>
+<h2><a class="header" href="#errors-5" id="errors-5">Errors</a></h2>
+<p>If a key type is specified then a <code>DispatchError::KeyTypeUnexpected</code> is
+returned.</p>
+<p>If no key is provided then a <code>DispatchError::ArgumentRetrieval</code> is returned.</p>
+<h2><a class="header" href="#examples-5" id="examples-5">Examples</a></h2>
+<h3><a class="header" href="#cli-6" id="cli-6">CLI</a></h3>
 <pre><code>&gt; set:bool foo false
 false
 &gt; exists foo
@@ -382,16 +444,19 @@ true
 false
 </code></pre>
 <h1><a class="header" href="#increment" id="increment">increment</a></h1>
+<p><strong>Usage</strong>: <code>decrement[:key_type] &lt;key&gt;</code></p>
+<p><strong>Supported key types</strong>: <code>float</code>, <code>integer</code></p>
 <p>The <code>increment</code> command takes a key argument and increments a float or integer
 by 1. If the key doesn't already exist, then a default value of 0 is set and
 then incremented.</p>
-<p>A key type of Float or Integer may be specified. If a different key type is
-specified then an error is returned.</p>
-<p>If a key exists of a different type than the specified key type, then an error
-is returned. For example, if a Float key type is specified but a key exists
-which is an Integer, then the command will error.</p>
-<p>Usage: <code>increment[:key_type] &lt;key&gt;</code></p>
-<p>CLI example:</p>
+<h2><a class="header" href="#errors-6" id="errors-6">Errors</a></h2>
+<p>If a key is not specified, then a <code>DispatchError::KeyUnspecified</code> is returned.</p>
+<p>If the command does not support the specified key type, then a
+<code>DispatchError::KeyTypeInvalid</code> is returned.</p>
+<p>If the type of the key is different than the specified key type, then a
+<code>DispatchError::KeyTypeDifferent</code> is returned.</p>
+<h2><a class="header" href="#examples-6" id="examples-6">Examples</a></h2>
+<h3><a class="header" href="#cli-7" id="cli-7">CLI</a></h3>
 <pre><code>&gt; increment foo # foo will be an integer since that is the default type
 1
 &gt; increment:float foo
@@ -403,18 +468,41 @@ Dispatch error: key &quot;foo&quot; is not a float.
 &gt; increment foo
 2
 </code></pre>
+<h3><a class="header" href="#client-4" id="client-4">Client</a></h3>
+<pre><pre class="playpen"><code class="language-rust">
+<span class="boring">#![allow(unused_variables)]
+</span><span class="boring">fn main() {
+</span>use hop::{Client, KeyType};
+
+let client = Client::memory();
+
+assert_eq!(1, client.increment(&quot;foo&quot;).await?);
+
+// Dispatch error: key &quot;foo&quot; is not a float.
+assert!(client.increment(&quot;foo&quot;).float().await.is_err());
+
+assert!(client.increment(&quot;bar&quot;).float().await.is_ok());
+
+assert!(client.increment(&quot;bar&quot;).float().await.is_ok());
+
+assert_eq!(2, client.increment(&quot;foo&quot;).int().await?);
+<span class="boring">}
+</span></code></pre></pre>
 <h1><a class="header" href="#incrementby" id="incrementby">increment:by</a></h1>
+<p><strong>Usage</strong>: <code>increment:by[:key_type] &lt;key&gt; &lt;amount&gt;</code></p>
+<p><strong>Supported key types</strong>: <code>float</code>, <code>integer</code></p>
 <p>The <code>increment:by</code> command is a sub-command of <code>increment</code>, and like <code>increment</code>
 it takes a key argument. An additional argument must be provided which specifies
 the amount to increment the value by. If the key doesn't already exist, then a
 default value of 0 is set and then incremented by the specified amount.</p>
-<p>A key type of Float or Integer may be specified. If a different key type is
-specified then an error is returned.</p>
-<p>If a key exists of a different type than the specified key type, then an error
-is returned. For example, if a Float key type is specified but a key exists
-which is an Integer, then the command will error.</p>
-<p>Usage: <code>increment:by[:key_type] &lt;key&gt; &lt;amount&gt;</code></p>
-<p>CLI example:</p>
+<h2><a class="header" href="#errors-7" id="errors-7">Errors</a></h2>
+<p>If a key is not specified then a <code>DispatchError::KeyUnspecified</code> is returned.</p>
+<p>If a value is not specified then a <code>DispatchError::ArgumentRetrieval</code> is
+returned.</p>
+<p>If the key type was specified and it is different than the key's type a
+<code>DispatchError::KeyTypeDifferent</code> is returned.</p>
+<h2><a class="header" href="#examples-7" id="examples-7">Examples</a></h2>
+<h3><a class="header" href="#cli-8" id="cli-8">CLI</a></h3>
 <pre><code>&gt; increment:by foo 3 # foo will be an integer since that is the default type
 3
 &gt; increment:by:float foo 2.0
@@ -426,19 +514,41 @@ Dispatch error: key &quot;foo&quot; is not a float.
 &gt; increment:by foo 3
 6
 </code></pre>
+<h3><a class="header" href="#client-5" id="client-5">Client</a></h3>
+<pre><pre class="playpen"><code class="language-rust">
+<span class="boring">#![allow(unused_variables)]
+</span><span class="boring">fn main() {
+</span>use hop::{Client, KeyType};
+
+let client = Client::memory();
+
+assert_eq!(3, client.increment(&quot;foo&quot;).int().by(3).await?);
+
+// Dispatch error: key &quot;foo&quot; is not a float.
+assert!(client.increment(&quot;foo&quot;).float().by(2.0).await.is_err());
+
+assert!(client.increment(&quot;bar&quot;).float().by(2.0).await.is_ok());
+
+assert!(client.increment(&quot;bar&quot;).float().by(3.0).await.is_ok());
+
+assert_eq!(6, client.increment(&quot;foo&quot;).int().by(3).await?);
+<span class="boring">}
+</span></code></pre></pre>
 <h1><a class="header" href="#is" id="is">is</a></h1>
-<p>Usage: <code>is&lt;:key_type&gt; &lt;key&gt; [keys...]</code></p>
+<p><strong>Usage</strong>: <code>is&lt;:key_type&gt; &lt;key&gt; [keys...]</code></p>
+<p><strong>Supported key types</strong>: <code>boolean</code>, <code>bytes</code>, <code>float</code>, <code>integer</code>, <code>list</code>, <code>map</code>,
+<code>set</code>, <code>string</code></p>
 <p>The <code>is</code> command checks if all of the provided key names are of a certain key
 type. If at least one key does not exist or is not the specified key type,
 then <code>false</code> is returned, otherwise <code>true</code> is returned.</p>
 <p>At least one key must be provided. A key type must also be provided.</p>
-<h2><a class="header" href="#errors-1" id="errors-1">Errors</a></h2>
+<h2><a class="header" href="#errors-8" id="errors-8">Errors</a></h2>
 <p>If a key type is not specified, then a <code>DispatchError::KeyTypeRequired</code> error is
 returned.</p>
 <p>If no arguments are provided, then a <code>DispatchError::ArgumentRetrieval</code> error is
 returned.</p>
-<h2><a class="header" href="#examples-1" id="examples-1">Examples</a></h2>
-<h3><a class="header" href="#cli-2" id="cli-2">CLI</a></h3>
+<h2><a class="header" href="#examples-8" id="examples-8">Examples</a></h2>
+<h3><a class="header" href="#cli-9" id="cli-9">CLI</a></h3>
 <pre><code>&gt; set:bool foo false
 false
 &gt; is:bool foo # foo is a bool
@@ -452,7 +562,7 @@ false
 &gt; is:bool foo baz # foo is a bool, but baz does not exist
 false
 </code></pre>
-<h3><a class="header" href="#client-2" id="client-2">Client</a></h3>
+<h3><a class="header" href="#client-6" id="client-6">Client</a></h3>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
 </span><span class="boring">fn main() {
@@ -480,11 +590,21 @@ assert!(!client.is(KeyType::Boolean).keys(&amp;[&quot;foo&quot;, &quot;baz&quot;
 <span class="boring">}
 </span></code></pre></pre>
 <h1><a class="header" href="#length" id="length">length</a></h1>
-<p>The <code>length</code> command returns the length of a Bytes, List, Map, Set, or String. A
-key type can be specified to limit the operation to only calculating the length
-of the key if it matches the specified type.</p>
-<p>Usage: <code>length[:key_type] &lt;key&gt;</code></p>
-<p>CLI example:</p>
+<p><strong>Usage</strong>: <code>length[:key_type] &lt;key&gt;</code></p>
+<p><strong>Supported key types</strong>: <code>bytes</code>, <code>list</code>, <code>map</code>, <code>set</code>, <code>string</code></p>
+<p>The <code>length</code> command returns the length of some bytes, a list, map, set, or
+string. A key type can be specified to limit the operation to only calculating
+the length of the key if it matches the specified type.</p>
+<h2><a class="header" href="#errors-9" id="errors-9">Errors</a></h2>
+<p>If a key is not specified then a <code>DispatchError::KeyUnspecified</code> is returned.</p>
+<p>If a specified key type is not supported than a <code>DispatchError::KeyTypeInvalid</code>
+is returned.</p>
+<p>If the specified key does not exist thyen a <code>DispatchError::KeyNonexistent</code>
+is returned.</p>
+<p>If the key type of the key is different than the specified key type then a
+<code>DispatchError::KeyTypeDifferent</code> is returned.</p>
+<h2><a class="header" href="#examples-9" id="examples-9">Examples</a></h2>
+<h3><a class="header" href="#cli-10" id="cli-10">CLI</a></h3>
 <pre><code>&gt; set:map foo key1 value1 key2 value2
 key1=value1 key2=value2
 &gt; length foo
@@ -497,12 +617,24 @@ item1 item2
 2
 </code></pre>
 <h1><a class="header" href="#rename" id="rename">rename</a></h1>
+<p><strong>Usage</strong>: <code>rename &lt;from&gt; &lt;to&gt;</code></p>
+<p><strong>Supported key types</strong>: none</p>
 <p>The <code>rename</code> command renames a key by moving the value from one key to another.
-The source key must have a value, and the destination key must not already be
-present.</p>
+The source key must exist, and the destination key must not already be taken.</p>
 <p>The destination key name is returned on success as confirmation.</p>
-<p>Usage: <code>rename &lt;from&gt; &lt;to&gt;</code></p>
-<p>CLI example:</p>
+<h2><a class="header" href="#errors-10" id="errors-10">Errors</a></h2>
+<p>If a key type is specified then a <code>DispatchError::KeyTypeUnexpected</code> is
+returned.</p>
+<p>If a source key is not specified then a <code>DispatchError::KeyUnspecified</code> is
+returned.</p>
+<p>If a destination key is not specified then a <code>DispatchError::ArgumentRetrieval</code>
+is returned.</p>
+<p>If the source key does not exist then a <code>DispatchError::KeyNonexistent</code> is
+returned.</p>
+<p>If the destination key does not exist then a <code>DispatchError::PreconditionFailed</code>
+is returned.</p>
+<h2><a class="header" href="#examples-10" id="examples-10">Examples</a></h2>
+<h3><a class="header" href="#cli-11" id="cli-11">CLI</a></h3>
 <pre><code>&gt; rename
 The key to rename is required.
 &gt; rename foo bar
@@ -517,20 +649,22 @@ bar
 Dispatch error: the destination key, &quot;bar&quot;, already exists.
 </code></pre>
 <h1><a class="header" href="#set" id="set">set</a></h1>
-<p>Usage: <code>set[:key_type] &lt;key&gt; &lt;value...&gt;</code></p>
+<p><strong>Usage</strong>: <code>set[:key_type] &lt;key&gt; &lt;value...&gt;</code></p>
+<p><strong>Supported key types</strong>: <code>boolean</code>, <code>bytes</code>, <code>float</code>, <code>integer</code>, <code>list</code>, <code>map</code>,
+<code>set</code>, <code>string</code></p>
 <p>The <code>set</code> command sets a value to a key, overriding the existing key's value if
 one exists. The <code>set</code> command supports setting values of all types.</p>
 <p>A key and value must both be provided. A key type is optional, and the default
 type is raw bytes.</p>
-<h2><a class="header" href="#errors-2" id="errors-2">Errors</a></h2>
-<p>If a key type set not specified, then a <code>DispatchError::KeyUnspecified</code> error is
+<h2><a class="header" href="#errors-11" id="errors-11">Errors</a></h2>
+<p>If a key type is not specified then a <code>DispatchError::KeyUnspecified</code> error is
 returned.</p>
-<p>If no value is provided, then a <code>DispatchError::ArgumentRetrieval</code> error is
+<p>If no value is provided then a <code>DispatchError::ArgumentRetrieval</code> error is
 returned.</p>
-<p>If a provided value is of the wrong type, then a <code>DispatchError::WrongType</code>
-error is returned.</p>
-<h2><a class="header" href="#examples-2" id="examples-2">Examples</a></h2>
-<h3><a class="header" href="#cli-3" id="cli-3">CLI</a></h3>
+<p>If a provided value is of the wrong type then a
+<code>DispatchError::KeyTypeDifferent</code> error is returned.</p>
+<h2><a class="header" href="#examples-11" id="examples-11">Examples</a></h2>
+<h3><a class="header" href="#cli-12" id="cli-12">CLI</a></h3>
 <pre><code>&gt; set:bool foo true
 true
 &gt; is:bool foo # &quot;foo&quot; is a bool
@@ -543,7 +677,7 @@ true
 a=b
 c=d
 </code></pre>
-<h3><a class="header" href="#client-3" id="client-3">Client</a></h3>
+<h3><a class="header" href="#client-7" id="client-7">Client</a></h3>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
 </span><span class="boring">fn main() {
@@ -568,6 +702,8 @@ client.set(&quot;foo&quot;).list([b&quot;bar&quot;.to_vec(), b&quot;baz&quot;.to
 <span class="boring">}
 </span></code></pre></pre>
 <h1><a class="header" href="#stats" id="stats">stats</a></h1>
+<p><strong>Usage</strong>: <code>stats</code></p>
+<p><strong>Supported key types</strong>: none</p>
 <p>The <code>stats</code> command returns a Map of statistics about the Hop instance. The Hop
 engine maintains metrics about operations and its current state.</p>
 <p>The following statistics are returned:</p>
@@ -581,8 +717,11 @@ initiated.</li>
 <li><strong>sessions_ended</strong>: the number of client sessions that have finished for one
 reason or another.</li>
 </ul>
-<p>Usage: <code>stats</code></p>
-<p>CLI example:</p>
+<h2><a class="header" href="#errors-12" id="errors-12">Errors</a></h2>
+<p>If a key type is specified then a <code>DispatchError::KeyTypeUnexpected</code> is
+returned.</p>
+<h2><a class="header" href="#examples-12" id="examples-12">Examples</a></h2>
+<h3><a class="header" href="#cli-13" id="cli-13">CLI</a></h3>
 <pre><code class="language-python">&gt; set:int foo 1234
 1234
 &gt; stats

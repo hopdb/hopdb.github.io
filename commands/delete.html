@@ -152,11 +152,19 @@
                 <div id="content" class="content">
                     <main>
                         <h1><a class="header" href="#delete" id="delete">delete</a></h1>
+<p><strong>Usage</strong>: <code>delete &lt;key&gt;</code></p>
+<p><strong>Supported key types</strong>: none</p>
 <p>The <code>delete</code> command deletes a key by name. A key type can't be specified, and
 regardless of type the key will be deleted if it exists. The key's name is
 returned on success as confirmation.</p>
-<p>Usage: <code>delete &lt;key&gt;</code></p>
-<p>CLI example:</p>
+<h2><a class="header" href="#errors" id="errors">Errors</a></h2>
+<p>If a key type is specified then a <code>DispatchError::KeyTypeUnexpected</code> is
+returned.</p>
+<p>If a key is not specified then a <code>DispatchError::KeyUnspecified</code> is returned.</p>
+<p>If the key does not exist then a <code>DispatchError::PreconditionFailed</code> is
+returned.</p>
+<h2><a class="header" href="#examples" id="examples">Examples</a></h2>
+<h3><a class="header" href="#cli" id="cli">CLI</a></h3>
 <pre><code>&gt; set:list foo item1 item2 item1
 item1
 item2

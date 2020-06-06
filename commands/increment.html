@@ -152,16 +152,19 @@
                 <div id="content" class="content">
                     <main>
                         <h1><a class="header" href="#increment" id="increment">increment</a></h1>
+<p><strong>Usage</strong>: <code>decrement[:key_type] &lt;key&gt;</code></p>
+<p><strong>Supported key types</strong>: <code>float</code>, <code>integer</code></p>
 <p>The <code>increment</code> command takes a key argument and increments a float or integer
 by 1. If the key doesn't already exist, then a default value of 0 is set and
 then incremented.</p>
-<p>A key type of Float or Integer may be specified. If a different key type is
-specified then an error is returned.</p>
-<p>If a key exists of a different type than the specified key type, then an error
-is returned. For example, if a Float key type is specified but a key exists
-which is an Integer, then the command will error.</p>
-<p>Usage: <code>increment[:key_type] &lt;key&gt;</code></p>
-<p>CLI example:</p>
+<h2><a class="header" href="#errors" id="errors">Errors</a></h2>
+<p>If a key is not specified, then a <code>DispatchError::KeyUnspecified</code> is returned.</p>
+<p>If the command does not support the specified key type, then a
+<code>DispatchError::KeyTypeInvalid</code> is returned.</p>
+<p>If the type of the key is different than the specified key type, then a
+<code>DispatchError::KeyTypeDifferent</code> is returned.</p>
+<h2><a class="header" href="#examples" id="examples">Examples</a></h2>
+<h3><a class="header" href="#cli" id="cli">CLI</a></h3>
 <pre><code>&gt; increment foo # foo will be an integer since that is the default type
 1
 &gt; increment:float foo
@@ -173,6 +176,26 @@ Dispatch error: key &quot;foo&quot; is not a float.
 &gt; increment foo
 2
 </code></pre>
+<h3><a class="header" href="#client" id="client">Client</a></h3>
+<pre><pre class="playpen"><code class="language-rust">
+<span class="boring">#![allow(unused_variables)]
+</span><span class="boring">fn main() {
+</span>use hop::{Client, KeyType};
+
+let client = Client::memory();
+
+assert_eq!(1, client.increment(&quot;foo&quot;).await?);
+
+// Dispatch error: key &quot;foo&quot; is not a float.
+assert!(client.increment(&quot;foo&quot;).float().await.is_err());
+
+assert!(client.increment(&quot;bar&quot;).float().await.is_ok());
+
+assert!(client.increment(&quot;bar&quot;).float().await.is_ok());
+
+assert_eq!(2, client.increment(&quot;foo&quot;).int().await?);
+<span class="boring">}
+</span></code></pre></pre>
 
                     </main>
 

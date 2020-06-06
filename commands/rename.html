@@ -152,12 +152,24 @@
                 <div id="content" class="content">
                     <main>
                         <h1><a class="header" href="#rename" id="rename">rename</a></h1>
+<p><strong>Usage</strong>: <code>rename &lt;from&gt; &lt;to&gt;</code></p>
+<p><strong>Supported key types</strong>: none</p>
 <p>The <code>rename</code> command renames a key by moving the value from one key to another.
-The source key must have a value, and the destination key must not already be
-present.</p>
+The source key must exist, and the destination key must not already be taken.</p>
 <p>The destination key name is returned on success as confirmation.</p>
-<p>Usage: <code>rename &lt;from&gt; &lt;to&gt;</code></p>
-<p>CLI example:</p>
+<h2><a class="header" href="#errors" id="errors">Errors</a></h2>
+<p>If a key type is specified then a <code>DispatchError::KeyTypeUnexpected</code> is
+returned.</p>
+<p>If a source key is not specified then a <code>DispatchError::KeyUnspecified</code> is
+returned.</p>
+<p>If a destination key is not specified then a <code>DispatchError::ArgumentRetrieval</code>
+is returned.</p>
+<p>If the source key does not exist then a <code>DispatchError::KeyNonexistent</code> is
+returned.</p>
+<p>If the destination key does not exist then a <code>DispatchError::PreconditionFailed</code>
+is returned.</p>
+<h2><a class="header" href="#examples" id="examples">Examples</a></h2>
+<h3><a class="header" href="#cli" id="cli">CLI</a></h3>
 <pre><code>&gt; rename
 The key to rename is required.
 &gt; rename foo bar

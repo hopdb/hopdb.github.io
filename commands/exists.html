@@ -152,12 +152,18 @@
                 <div id="content" class="content">
                     <main>
                         <h1><a class="header" href="#exists" id="exists">exists</a></h1>
+<p><strong>Usage</strong>: <code>exists &lt;key&gt; [keys...]</code></p>
+<p><strong>Supported key types</strong>: none</p>
 <p>The <code>exists</code> command checks if all of the provided key names exist. If at least
 one key does not exist, then <code>false</code> is returned, otherwise <code>true</code> is returned.</p>
 <p>At least one key must be provided, up to the global limit of 255. If you need to
 check that more exist, use multiple commands.</p>
-<p>Usage: <code>exists &lt;key&gt; [keys...]</code></p>
-<p>CLI example:</p>
+<h2><a class="header" href="#errors" id="errors">Errors</a></h2>
+<p>If a key type is specified then a <code>DispatchError::KeyTypeUnexpected</code> is
+returned.</p>
+<p>If no key is provided then a <code>DispatchError::ArgumentRetrieval</code> is returned.</p>
+<h2><a class="header" href="#examples" id="examples">Examples</a></h2>
+<h3><a class="header" href="#cli" id="cli">CLI</a></h3>
 <pre><code>&gt; set:bool foo false
 false
 &gt; exists foo

@@ -152,18 +152,20 @@
                 <div id="content" class="content">
                     <main>
                         <h1><a class="header" href="#set" id="set">set</a></h1>
-<p>Usage: <code>set[:key_type] &lt;key&gt; &lt;value...&gt;</code></p>
+<p><strong>Usage</strong>: <code>set[:key_type] &lt;key&gt; &lt;value...&gt;</code></p>
+<p><strong>Supported key types</strong>: <code>boolean</code>, <code>bytes</code>, <code>float</code>, <code>integer</code>, <code>list</code>, <code>map</code>,
+<code>set</code>, <code>string</code></p>
 <p>The <code>set</code> command sets a value to a key, overriding the existing key's value if
 one exists. The <code>set</code> command supports setting values of all types.</p>
 <p>A key and value must both be provided. A key type is optional, and the default
 type is raw bytes.</p>
 <h2><a class="header" href="#errors" id="errors">Errors</a></h2>
-<p>If a key type set not specified, then a <code>DispatchError::KeyUnspecified</code> error is
+<p>If a key type is not specified then a <code>DispatchError::KeyUnspecified</code> error is
 returned.</p>
-<p>If no value is provided, then a <code>DispatchError::ArgumentRetrieval</code> error is
+<p>If no value is provided then a <code>DispatchError::ArgumentRetrieval</code> error is
 returned.</p>
-<p>If a provided value is of the wrong type, then a <code>DispatchError::WrongType</code>
-error is returned.</p>
+<p>If a provided value is of the wrong type then a
+<code>DispatchError::KeyTypeDifferent</code> error is returned.</p>
 <h2><a class="header" href="#examples" id="examples">Examples</a></h2>
 <h3><a class="header" href="#cli" id="cli">CLI</a></h3>
 <pre><code>&gt; set:bool foo true
