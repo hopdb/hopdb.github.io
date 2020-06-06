@@ -1,19 +1,26 @@
 # increment
 
+**Usage**: `decrement[:key_type] <key>`
+
+**Supported key types**: `float`, `integer`
+
 The `increment` command takes a key argument and increments a float or integer
 by 1. If the key doesn't already exist, then a default value of 0 is set and
 then incremented.
 
-A key type of Float or Integer may be specified. If a different key type is
-specified then an error is returned.
+## Errors
 
-If a key exists of a different type than the specified key type, then an error
-is returned. For example, if a Float key type is specified but a key exists
-which is an Integer, then the command will error.
+If a key is not specified, then a `DispatchError::KeyUnspecified` is returned.
 
-Usage: `increment[:key_type] <key>`
+If the command does not support the specified key type, then a
+`DispatchError::KeyTypeInvalid` is returned.
 
-CLI example:
+If the type of the key is different than the specified key type, then a
+`DispatchError::KeyTypeDifferent` is returned.
+
+## Examples
+
+### CLI
 
 ```
 > increment foo # foo will be an integer since that is the default type
@@ -26,4 +33,23 @@ Dispatch error: key "foo" is not a float.
 2.0
 > increment foo
 2
+```
+
+### Client
+
+```rust
+use hop::{Client, KeyType};
+
+let client = Client::memory();
+
+assert_eq!(1, client.increment("foo").await?);
+
+// Dispatch error: key "foo" is not a float.
+assert!(client.increment("foo").float().await.is_err());
+
+assert!(client.increment("bar").float().await.is_ok());
+
+assert!(client.increment("bar").float().await.is_ok());
+
+assert_eq!(2, client.increment("foo").int().await?);
 ```

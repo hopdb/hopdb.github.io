@@ -1,6 +1,9 @@
 # is
 
-Usage: `is<:key_type> <key> [keys...]`
+**Usage**: `is<:key_type> <key> [keys...]`
+
+**Supported key types**: `boolean`, `bytes`, `float`, `integer`, `list`, `map`,
+`set`, `string`
 
 The `is` command checks if all of the provided key names are of a certain key
 type. If at least one key does not exist or is not the specified key type,

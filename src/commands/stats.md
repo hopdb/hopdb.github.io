@@ -1,5 +1,9 @@
 # stats
 
+**Usage**: `stats`
+
+**Supported key types**: none
+
 The `stats` command returns a Map of statistics about the Hop instance. The Hop
 engine maintains metrics about operations and its current state.
 
@@ -14,9 +18,14 @@ initiated.
 - **sessions_ended**: the number of client sessions that have finished for one
 reason or another.
 
-Usage: `stats`
+## Errors
 
-CLI example:
+If a key type is specified then a `DispatchError::KeyTypeUnexpected` is
+returned.
+
+## Examples
+
+### CLI
 
 ```python
 > set:int foo 1234

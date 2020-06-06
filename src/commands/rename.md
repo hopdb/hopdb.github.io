@@ -1,14 +1,34 @@
 # rename
 
+**Usage**: `rename <from> <to>`
+
+**Supported key types**: none
+
 The `rename` command renames a key by moving the value from one key to another.
-The source key must have a value, and the destination key must not already be
-present.
+The source key must exist, and the destination key must not already be taken.
 
 The destination key name is returned on success as confirmation.
 
-Usage: `rename <from> <to>`
+## Errors
 
-CLI example:
+If a key type is specified then a `DispatchError::KeyTypeUnexpected` is
+returned.
+
+If a source key is not specified then a `DispatchError::KeyUnspecified` is
+returned.
+
+If a destination key is not specified then a `DispatchError::ArgumentRetrieval`
+is returned.
+
+If the source key does not exist then a `DispatchError::KeyNonexistent` is
+returned.
+
+If the destination key does not exist then a `DispatchError::PreconditionFailed`
+is returned.
+
+## Examples
+
+### CLI
 
 ```
 > rename
