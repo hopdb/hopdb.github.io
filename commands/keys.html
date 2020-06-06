@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>increment - HopDB</title>
+        <title>keys - HopDB</title>
         
 
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
@@ -81,7 +81,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../hop.html">Hop</a></li><li class="chapter-item expanded affix "><a href="../installation.html">Installation</a></li><li class="chapter-item expanded affix "><a href="../clients.html">Clients</a></li><li class="chapter-item expanded "><a href="../basics/index.html"><strong aria-hidden="true">1.</strong> Basics</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../basics/projects.html"><strong aria-hidden="true">1.1.</strong> Projects</a></li></ol></li><li class="chapter-item expanded "><a href="../commands/index.html"><strong aria-hidden="true">2.</strong> Commands</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../commands/append.html"><strong aria-hidden="true">2.1.</strong> append</a></li><li class="chapter-item expanded "><a href="../commands/decrement.html"><strong aria-hidden="true">2.2.</strong> decrement</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../commands/decrement_by.html"><strong aria-hidden="true">2.2.1.</strong> decrement:by</a></li></ol></li><li class="chapter-item expanded "><a href="../commands/delete.html"><strong aria-hidden="true">2.3.</strong> delete</a></li><li class="chapter-item expanded "><a href="../commands/echo.html"><strong aria-hidden="true">2.4.</strong> echo</a></li><li class="chapter-item expanded "><a href="../commands/exists.html"><strong aria-hidden="true">2.5.</strong> exists</a></li><li class="chapter-item expanded "><a href="../commands/increment.html" class="active"><strong aria-hidden="true">2.6.</strong> increment</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../commands/increment_by.html"><strong aria-hidden="true">2.6.1.</strong> increment:by</a></li></ol></li><li class="chapter-item expanded "><a href="../commands/is.html"><strong aria-hidden="true">2.7.</strong> is</a></li><li class="chapter-item expanded "><a href="../commands/keys.html"><strong aria-hidden="true">2.8.</strong> keys</a></li><li class="chapter-item expanded "><a href="../commands/length.html"><strong aria-hidden="true">2.9.</strong> length</a></li><li class="chapter-item expanded "><a href="../commands/rename.html"><strong aria-hidden="true">2.10.</strong> rename</a></li><li class="chapter-item expanded "><a href="../commands/set.html"><strong aria-hidden="true">2.11.</strong> set</a></li><li class="chapter-item expanded "><a href="../commands/stats.html"><strong aria-hidden="true">2.12.</strong> stats</a></li></ol></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../hop.html">Hop</a></li><li class="chapter-item expanded affix "><a href="../installation.html">Installation</a></li><li class="chapter-item expanded affix "><a href="../clients.html">Clients</a></li><li class="chapter-item expanded "><a href="../basics/index.html"><strong aria-hidden="true">1.</strong> Basics</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../basics/projects.html"><strong aria-hidden="true">1.1.</strong> Projects</a></li></ol></li><li class="chapter-item expanded "><a href="../commands/index.html"><strong aria-hidden="true">2.</strong> Commands</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../commands/append.html"><strong aria-hidden="true">2.1.</strong> append</a></li><li class="chapter-item expanded "><a href="../commands/decrement.html"><strong aria-hidden="true">2.2.</strong> decrement</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../commands/decrement_by.html"><strong aria-hidden="true">2.2.1.</strong> decrement:by</a></li></ol></li><li class="chapter-item expanded "><a href="../commands/delete.html"><strong aria-hidden="true">2.3.</strong> delete</a></li><li class="chapter-item expanded "><a href="../commands/echo.html"><strong aria-hidden="true">2.4.</strong> echo</a></li><li class="chapter-item expanded "><a href="../commands/exists.html"><strong aria-hidden="true">2.5.</strong> exists</a></li><li class="chapter-item expanded "><a href="../commands/increment.html"><strong aria-hidden="true">2.6.</strong> increment</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../commands/increment_by.html"><strong aria-hidden="true">2.6.1.</strong> increment:by</a></li></ol></li><li class="chapter-item expanded "><a href="../commands/is.html"><strong aria-hidden="true">2.7.</strong> is</a></li><li class="chapter-item expanded "><a href="../commands/keys.html" class="active"><strong aria-hidden="true">2.8.</strong> keys</a></li><li class="chapter-item expanded "><a href="../commands/length.html"><strong aria-hidden="true">2.9.</strong> length</a></li><li class="chapter-item expanded "><a href="../commands/rename.html"><strong aria-hidden="true">2.10.</strong> rename</a></li><li class="chapter-item expanded "><a href="../commands/set.html"><strong aria-hidden="true">2.11.</strong> set</a></li><li class="chapter-item expanded "><a href="../commands/stats.html"><strong aria-hidden="true">2.12.</strong> stats</a></li></ol></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -151,64 +151,46 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#increment" id="increment">increment</a></h1>
-<p><strong>Usage</strong>: <code>decrement[:key_type] &lt;key&gt;</code></p>
-<p><strong>Supported key types</strong>: <code>float</code>, <code>integer</code></p>
-<p>The <code>increment</code> command takes a key argument and increments a float or integer
-by 1. If the key doesn't already exist, then a default value of 0 is set and
-then incremented.</p>
+                        <h1><a class="header" href="#keys" id="keys">keys</a></h1>
+<p><strong>Usage</strong>: <code>keys[:key_type] &lt;key&gt;</code></p>
+<p><strong>Supported key types</strong>: <code>map</code></p>
+<p>The <code>keys</code> command returns a list of all of the keys of a map. For example, a
+map with the key-value pair <code>key1</code> and <code>value1</code> and a second key-value pair of
+<code>key2</code> and <code>value2</code>, when retrieved with this command will return a list with
+<code>key1</code> and <code>key2</code>.</p>
 <h2><a class="header" href="#errors" id="errors">Errors</a></h2>
-<p>If a key is not specified, then a <code>DispatchError::KeyUnspecified</code> is returned.</p>
-<p>If the command does not support the specified key type, then a
-<code>DispatchError::KeyTypeInvalid</code> is returned.</p>
-<p>If the type of the key is different than the specified key type, then a
+<p>If a key is not specified then a <code>DispatchError::KeyUnspecified</code> is returned.</p>
+<p>If a specified key type is not supported than a <code>DispatchError::KeyTypeInvalid</code>
+is returned.</p>
+<p>If the specified key does not exist thyen a <code>DispatchError::KeyNonexistent</code>
+is returned.</p>
+<p>If the key type of the key is different than the specified key type then a
 <code>DispatchError::KeyTypeDifferent</code> is returned.</p>
 <h2><a class="header" href="#examples" id="examples">Examples</a></h2>
 <h3><a class="header" href="#cli" id="cli">CLI</a></h3>
-<pre><code>&gt; increment foo # foo will be an integer since that is the default type
-1
-&gt; increment:float foo
-Dispatch error: key &quot;foo&quot; is not a float.
-&gt; increment:float bar
-1.0
-&gt; increment bar
-2.0
-&gt; increment foo
-2
+<pre><code>&gt; set:map foo key1 value1 key2 value2
+key1=value1 key2=value2
+&gt; keys foo
+key1
+key2
+&gt; set:map bar key value
+key=value
+&gt; keys bar
+key
 </code></pre>
-<h3><a class="header" href="#client" id="client">Client</a></h3>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
-</span><span class="boring">fn main() {
-</span>use hop::{Client, KeyType};
-
-let client = Client::memory();
-
-assert_eq!(1, client.increment(&quot;foo&quot;).await?);
-
-// Dispatch error: key &quot;foo&quot; is not a float.
-assert!(client.increment(&quot;foo&quot;).float().await.is_err());
-
-assert!(client.increment(&quot;bar&quot;).float().await.is_ok());
-
-assert!(client.increment(&quot;bar&quot;).float().await.is_ok());
-
-assert_eq!(2, client.increment(&quot;foo&quot;).int().await?);
-<span class="boring">}
-</span></code></pre></pre>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
                         
-                            <a rel="prev" href="../commands/exists.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../commands/is.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
                         
 
                         
-                            <a rel="next" href="../commands/increment_by.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next" href="../commands/length.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
                         
@@ -220,13 +202,13 @@ assert_eq!(2, client.increment(&quot;foo&quot;).int().await?);
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
                 
-                    <a rel="prev" href="../commands/exists.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../commands/is.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
                 
 
                 
-                    <a rel="next" href="../commands/increment_by.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next" href="../commands/length.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
                 
