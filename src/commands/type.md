@@ -4,9 +4,7 @@
 
 **Supported key types**: none
 
-The `is` command checks if all of the provided key names are of a certain key
-type. If at least one key does not exist or is not the specified key type,
-then `false` is returned, otherwise `true` is returned.
+The `type` command retrieves the key type of a key.
 
 At least one key must be provided. A key type must also be provided.
 
