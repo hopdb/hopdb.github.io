@@ -83,7 +83,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="hop.html">Hop</a></li><li class="chapter-item expanded affix "><a href="installation.html">Installation</a></li><li class="chapter-item expanded affix "><a href="clients.html">Clients</a></li><li class="chapter-item expanded "><a href="basics/index.html"><strong aria-hidden="true">1.</strong> Basics</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="basics/projects.html"><strong aria-hidden="true">1.1.</strong> Projects</a></li></ol></li><li class="chapter-item expanded "><a href="commands/index.html"><strong aria-hidden="true">2.</strong> Commands</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="commands/append.html"><strong aria-hidden="true">2.1.</strong> append</a></li><li class="chapter-item expanded "><a href="commands/decrement.html"><strong aria-hidden="true">2.2.</strong> decrement</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="commands/decrement_by.html"><strong aria-hidden="true">2.2.1.</strong> decrement:by</a></li></ol></li><li class="chapter-item expanded "><a href="commands/delete.html"><strong aria-hidden="true">2.3.</strong> delete</a></li><li class="chapter-item expanded "><a href="commands/echo.html"><strong aria-hidden="true">2.4.</strong> echo</a></li><li class="chapter-item expanded "><a href="commands/exists.html"><strong aria-hidden="true">2.5.</strong> exists</a></li><li class="chapter-item expanded "><a href="commands/increment.html"><strong aria-hidden="true">2.6.</strong> increment</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="commands/increment_by.html"><strong aria-hidden="true">2.6.1.</strong> increment:by</a></li></ol></li><li class="chapter-item expanded "><a href="commands/is.html"><strong aria-hidden="true">2.7.</strong> is</a></li><li class="chapter-item expanded "><a href="commands/keys.html"><strong aria-hidden="true">2.8.</strong> keys</a></li><li class="chapter-item expanded "><a href="commands/length.html"><strong aria-hidden="true">2.9.</strong> length</a></li><li class="chapter-item expanded "><a href="commands/rename.html"><strong aria-hidden="true">2.10.</strong> rename</a></li><li class="chapter-item expanded "><a href="commands/set.html"><strong aria-hidden="true">2.11.</strong> set</a></li><li class="chapter-item expanded "><a href="commands/stats.html"><strong aria-hidden="true">2.12.</strong> stats</a></li></ol></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="hop.html">Hop</a></li><li class="chapter-item expanded affix "><a href="installation.html">Installation</a></li><li class="chapter-item expanded affix "><a href="clients.html">Clients</a></li><li class="chapter-item expanded "><a href="basics/index.html"><strong aria-hidden="true">1.</strong> Basics</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="basics/projects.html"><strong aria-hidden="true">1.1.</strong> Projects</a></li></ol></li><li class="chapter-item expanded "><a href="commands/index.html"><strong aria-hidden="true">2.</strong> Commands</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="commands/append.html"><strong aria-hidden="true">2.1.</strong> append</a></li><li class="chapter-item expanded "><a href="commands/decrement.html"><strong aria-hidden="true">2.2.</strong> decrement</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="commands/decrement_by.html"><strong aria-hidden="true">2.2.1.</strong> decrement:by</a></li></ol></li><li class="chapter-item expanded "><a href="commands/delete.html"><strong aria-hidden="true">2.3.</strong> delete</a></li><li class="chapter-item expanded "><a href="commands/echo.html"><strong aria-hidden="true">2.4.</strong> echo</a></li><li class="chapter-item expanded "><a href="commands/exists.html"><strong aria-hidden="true">2.5.</strong> exists</a></li><li class="chapter-item expanded "><a href="commands/increment.html"><strong aria-hidden="true">2.6.</strong> increment</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="commands/increment_by.html"><strong aria-hidden="true">2.6.1.</strong> increment:by</a></li></ol></li><li class="chapter-item expanded "><a href="commands/is.html"><strong aria-hidden="true">2.7.</strong> is</a></li><li class="chapter-item expanded "><a href="commands/keys.html"><strong aria-hidden="true">2.8.</strong> keys</a></li><li class="chapter-item expanded "><a href="commands/length.html"><strong aria-hidden="true">2.9.</strong> length</a></li><li class="chapter-item expanded "><a href="commands/rename.html"><strong aria-hidden="true">2.10.</strong> rename</a></li><li class="chapter-item expanded "><a href="commands/set.html"><strong aria-hidden="true">2.11.</strong> set</a></li><li class="chapter-item expanded "><a href="commands/stats.html"><strong aria-hidden="true">2.12.</strong> stats</a></li><li class="chapter-item expanded "><a href="commands/type.html"><strong aria-hidden="true">2.13.</strong> type</a></li></ol></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -757,6 +757,44 @@ Commands errored: 0
 Sessions started: 0
 Sessions ended: 0
 </code></pre>
+<h1><a class="header" href="#type" id="type">type</a></h1>
+<p><strong>Usage</strong>: <code>type &lt;key&gt;</code></p>
+<p><strong>Supported key types</strong>: none</p>
+<p>The <code>is</code> command checks if all of the provided key names are of a certain key
+type. If at least one key does not exist or is not the specified key type,
+then <code>false</code> is returned, otherwise <code>true</code> is returned.</p>
+<p>At least one key must be provided. A key type must also be provided.</p>
+<h2><a class="header" href="#errors-14" id="errors-14">Errors</a></h2>
+<p>If a key is not specified, then a <code>DispatchError::KeyUnspecified</code> is returned.</p>
+<p>If a key type is specified then a <code>DispatchError::KeyTypeUnexpected</code> is
+returned.</p>
+<p>If the key does not exist then a <code>DispatchError::KeyNonexistent</code> is returned.</p>
+<h2><a class="header" href="#examples-14" id="examples-14">Examples</a></h2>
+<h3><a class="header" href="#cli-15" id="cli-15">CLI</a></h3>
+<pre><code>&gt; set:bool foo true
+true
+&gt; type foo
+bool
+&gt; set:int bar 123
+123
+&gt; type bar
+int
+</code></pre>
+<h3><a class="header" href="#client-8" id="client-8">Client</a></h3>
+<pre><pre class="playpen"><code class="language-rust">
+<span class="boring">#![allow(unused_variables)]
+</span><span class="boring">fn main() {
+</span>use hop::{Client, KeyType};
+
+let client = Client::memory();
+
+client.set(&quot;foo&quot;).bool(true).await?;
+assert_eq!(KeyType::Boolean, client.key_type(&quot;foo&quot;).await?);
+
+client.set(&quot;bar&quot;).int(123).await?;
+assert_eq!(KeyType::Integer, client.key_type(&quot;bar&quot;).await?);
+<span class="boring">}
+</span></code></pre></pre>
 
                     </main>
 
