@@ -19,3 +19,4 @@
   - [rename](./commands/rename.md)
   - [set](./commands/set.md)
   - [stats](./commands/stats.md)
+  - [type](./commands/type.md)
