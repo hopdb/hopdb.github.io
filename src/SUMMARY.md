@@ -15,6 +15,7 @@
   - [increment](./commands/increment.md)
     - [increment:by](./commands/increment_by.md)
   - [is](./commands/is.md)
+  - [keys](./commands/keys.md)
   - [length](./commands/length.md)
   - [rename](./commands/rename.md)
   - [set](./commands/set.md)
